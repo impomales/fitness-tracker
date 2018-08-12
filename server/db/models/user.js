@@ -3,10 +3,44 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const User = db.define('user', {
+  username: {
+    type: Sequelize.STRING,
+    defaultValue: 'user'
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false
+  },
+  weight: {
+    type: Sequelize.FLOAT,
+    validate: {
+      min: 0
+    },
+    get() {
+      return this.getDataValue('weight') + ' lbs';
+    }
+  },
+  height: {
+    // stored in inches.
+    type: Sequelize.INTEGER,
+    validate: {
+      min: 0
+    },
+    // front end in form 5'6"
+    get() {
+      const heightInInches = this.getDataValue('height');
+      const feet = heightInInches / 12;
+      const inches = heightInInches % 12;
+      return `${feet}'${inches}"`;
+    },
+    set(val) {
+      let valArr = val.split("\'");
+      const feet = Number(valArr[0]);
+      valArr = valArr[1].split('\"');
+      const inches = Number(valArr[0]);
+      this.setDataValue('height', feet * 12 + inches);
+    }
   },
   password: {
     type: Sequelize.STRING,
