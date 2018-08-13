@@ -5,6 +5,7 @@ const db = require('../db')
 const User = db.define('user', {
   username: {
     type: Sequelize.STRING,
+    // remove default later once username is added to form on front end
     defaultValue: 'user'
   },
   email: {
