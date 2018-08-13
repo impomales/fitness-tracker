@@ -31,12 +31,24 @@ describe('User model', () => {
   }) // end describe('instanceMethods')
 
   describe('getters', () => {
+    let isaias
+
+    beforeEach(async () => {
+      isaias = await User.create({
+        username: 'Isaias',
+        email: 'impomales@gmail.com',
+        password: 'ompaaa',
+        weight: 150.5,
+        height: 67
+      })
+    })
+
     it('can get the weight of a user in the form of a string', () => {
+      expect(isaias.weightStr).to.equal('150.5 lbs')
+    })
 
-    });
-
-    it('can get a user\'s height in user friendly form', () => {
-
-    });
-  });
+    it("can get a user's height in user friendly form", () => {
+      expect(isaias.height).to.equal('5\'7"')
+    })
+  })
 }) // end describe('User model')
