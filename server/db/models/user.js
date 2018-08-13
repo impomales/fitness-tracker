@@ -5,6 +5,7 @@ const db = require('../db')
 const User = db.define('user', {
   username: {
     type: Sequelize.STRING,
+    // remove default later once username is added to form on front end
     defaultValue: 'user'
   },
   email: {
@@ -16,9 +17,12 @@ const User = db.define('user', {
     type: Sequelize.FLOAT,
     validate: {
       min: 0
-    },
+    }
+  },
+  weightStr: {
+    type: Sequelize.VIRTUAL,
     get() {
-      return this.getDataValue('weight') + ' lbs';
+      return this.getDataValue('weight') + ' lbs'
     }
   },
   height: {
@@ -29,17 +33,10 @@ const User = db.define('user', {
     },
     // front end in form 5'6"
     get() {
-      const heightInInches = this.getDataValue('height');
-      const feet = heightInInches / 12;
-      const inches = heightInInches % 12;
-      return `${feet}'${inches}"`;
-    },
-    set(val) {
-      let valArr = val.split("\'");
-      const feet = Number(valArr[0]);
-      valArr = valArr[1].split('\"');
-      const inches = Number(valArr[0]);
-      this.setDataValue('height', feet * 12 + inches);
+      const heightInInches = this.getDataValue('height')
+      const feet = Math.floor(heightInInches / 12)
+      const inches = heightInInches % 12
+      return `${feet}'${inches}"`
     }
   },
   password: {
