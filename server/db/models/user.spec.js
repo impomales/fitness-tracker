@@ -29,4 +29,14 @@ describe('User model', () => {
       })
     }) // end describe('correctPassword')
   }) // end describe('instanceMethods')
+
+  describe('getters', () => {
+    it('can get the weight of a user in the form of a string', () => {
+
+    });
+
+    it('can get a user\'s height in user friendly form', () => {
+
+    });
+  });
 }) // end describe('User model')
