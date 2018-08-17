@@ -19,6 +19,12 @@ const User = db.define('user', {
       min: 0
     }
   },
+  age: {
+    type: Sequelize.INTEGER,
+    validate: {
+      min: 0
+    }
+  },
   weightStr: {
     type: Sequelize.VIRTUAL,
     get() {
