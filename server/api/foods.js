@@ -12,3 +12,12 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const food = await Food.findById(req.params.id);
+    if (food) res.json(food);
+  } catch (err) {
+    next(err)
+  }
+})
