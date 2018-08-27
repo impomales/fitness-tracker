@@ -42,6 +42,11 @@ router.post('/', async (req, res, next) => {
     potassium
   } = req.body
 
+  if (!req.user) {
+    res.status(401).json('unauthorized');
+    return;
+  }
+
   try {
     const food = await Food.create({
       name,
@@ -59,7 +64,8 @@ router.post('/', async (req, res, next) => {
       dietaryFiber,
       sugars,
       protein,
-      potassium
+      potassium,
+      userId: req.user.id
     })
     res.status(201).json(food)
   } catch (err) {
